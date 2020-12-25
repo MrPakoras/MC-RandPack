@@ -20,8 +20,9 @@ def rgbswap(image): # Swaps RGB value with each other
 	for x in range(img.size[0]):
 		for y in range(img.size[1]):
 			rgb = pixels[x,y]
-			print(rgb)
-			pixels[x,y] = tuple(random.sample(rgb,3))
+			# print(rgb)
+			# pixels[x,y] = tuple(random.sample(rgb,3)) # Turns all pixels into a random colour
+			pixels[x,y] = (rgb[2],rgb[0],rgb[1])
 
 			#pix = img.getpixel((1,1))
 			#print(pix)
@@ -30,11 +31,11 @@ def rgbswap(image): # Swaps RGB value with each other
 
 
 
-# rootDir = 'H:/Python/MC RandPack/1.16.4/assets/minecraft/textures/'
-# texDirs = ['block','colormap','item'] # Texture directories
+rootDir = 'H:/Python/MC RandPack/1.16.4/assets/minecraft/textures/'
+texDirs = ['block/','colormap/','item/','map','mob_effect','models/armor/','painting','particle'] # Texture directories
 
-rootDir = './textures/'
-texDirs = ['block/'] # Texture directories
+# rootDir = './textures/'
+# texDirs = ['block/'] # Texture directories
 
 for folder in texDirs:
 	for dirName, subdirList, fileList in os.walk(f'{rootDir}{folder}'):
