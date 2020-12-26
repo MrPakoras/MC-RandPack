@@ -40,7 +40,7 @@ from pathlib import Path
 # print(re.findall(r'\/.*$',addr)[-1])
 
 
-# img = i.open('./allium - Copy.png')
+# img = i.open('./glass.png')
 # pixels = img.load()
 
 # for x in range(img.size[0]):
@@ -68,6 +68,7 @@ def rgbswap(imagepath): # Swaps RGB value with each other
 				if len(p) == 4 and p[3] == 0:
 					print(f'>> Passed - {p}')
 					pass
+
 				else:
 
 					if len(p) == 3:
@@ -81,7 +82,7 @@ def rgbswap(imagepath): # Swaps RGB value with each other
 
 					if rgba not in pcdict:
 						newrgba = random.sample(rgba[:3],3)
-						newrgba.append(255) # Add alpha value of 1
+						newrgba.append(rgba[3]) # Add alpha value of 1
 						newrgba = tuple(newrgba)
 						pcdict[rgba] = newrgba
 						pixels[x,y] = newrgba
@@ -95,7 +96,7 @@ def rgbswap(imagepath): # Swaps RGB value with each other
 	# img = img.convert('RGBA')
 	img.save(imagepath)
 
-rgbswap('./allium - Copy.png')
+rgbswap('./glass.png')
 
 
 # a = (0,1,2,3)
