@@ -1,5 +1,5 @@
 from PIL import Image as i
-import os, re
+import os, re, random
 from pathlib import Path
 
 # f = 'hello.png'
@@ -40,9 +40,63 @@ from pathlib import Path
 # print(re.findall(r'\/.*$',addr)[-1])
 
 
-img = i.open('./allium (2).png')
-pixels = img.load()
+# img = i.open('./allium - Copy.png')
+# pixels = img.load()
 
-for x in range(img.size[0]):
-	for y in range(img.size[1]):
-		print(pixels[x,y])
+# for x in range(img.size[0]):
+# 	for y in range(img.size[1]):
+# 		print(f'{x},{y} - {pixels[x,y]}')
+
+# a = [r'water.*']
+# b = 'water-01.png'
+
+# if b in a:
+# 	print('Yea')
+# else:
+# 	print('Na')
+
+def rgbswap(imagepath): # Swaps RGB value with each other
+	img = i.open(imagepath)
+	pixels = img.load()
+	pcdict = {} # Pixel colour dictionary
+
+	for x in range(img.size[0]):
+		for y in range(img.size[1]):
+			try:
+				p = pixels[x,y]
+
+				if len(p) == 4 and p[3] == 0:
+					print(f'>> Passed - {p}')
+					pass
+				else:
+
+					if len(p) == 3:
+						r,g,b = p
+						alpha = 255
+						rgba = (r,g,b,alpha)
+					elif len(p) == 4:
+						rgba = p
+					else:
+						continue
+
+					if rgba not in pcdict:
+						newrgba = random.sample(rgba[:3],3)
+						newrgba.append(255) # Add alpha value of 1
+						newrgba = tuple(newrgba)
+						pcdict[rgba] = newrgba
+						pixels[x,y] = newrgba
+						print(f'>> {rgba} to {newrgba}')
+					else:
+						pixels[x,y] = pcdict[rgba]
+						print(f'>> {rgba} to {newrgba}')
+
+			except TypeError:
+				print('>> TypeError')
+	# img = img.convert('RGBA')
+	img.save(imagepath)
+
+rgbswap('./allium - Copy.png')
+
+
+# a = (0,1,2,3)
+# print(random.sample(a[:3],3))

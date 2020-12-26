@@ -2,16 +2,17 @@ import os, random, mimetypes, time, colorama
 from PIL import Image as i
 from PIL import ImageFilter, ImageOps, ImageDraw
 from pathlib import Path
+from shutil import copyfile, copy2
 from colorama import Fore
 colorama.init(autoreset=True)
 
 rootdir = './1.16.4/assets/minecraft/textures/'
-texdirs = ['block/','colormap/','item/','map/','mob_effect/','models/armor/','painting/','particle/'] # Texture directories
+texdirs = ['block/','item/','map/','mob_effect/','models/armor/','painting/','particle/'] # Texture directories
 
 dt = time.strftime('-%d%m%y-%H%M%S')
 
 # Excluded files
-exclfiles = []
+exclfiles = ['water_flow.png', 'water_overlay.png', 'water_still.png']
 
 def rgbswap(imagepath, filename): # Swaps RGB value with each other
 	img = i.open(imagepath)
@@ -29,7 +30,7 @@ def rgbswap(imagepath, filename): # Swaps RGB value with each other
 				# 	rgba = (0,0,0,0)
 				if len(p) == 3:
 					r,g,b = p
-					alpha = 0
+					alpha = 255
 					rgba = (r,g,b,alpha)
 				elif len(p) == 4:
 					rgba = p
@@ -37,8 +38,8 @@ def rgbswap(imagepath, filename): # Swaps RGB value with each other
 					continue
 
 				if rgba not in pcdict:
-					newrgba = random.sample(rgba,3)
-					newrgba.append(0) # Add alpha value of 0
+					newrgba = random.sample(rgba[:3],3)
+					newrgba.append(255) # Add alpha value of 255
 					newrgba = tuple(newrgba)
 					pcdict[rgba] = newrgba
 					pixels[x,y] = newrgba
@@ -57,8 +58,10 @@ for folder in texdirs:
 		for fname in enumerate(fileList, start=1):
 			filename = f'{rootdir}{folder}{fname[1]}'
 			if filename[-4:] == '.png':
-				if filename in exclfiles:
+				if fname[1] in exclfiles:
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.RED}{fname[1]}')
 				else:
 					rgbswap(filename, fname[1])
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.GREEN}{fname[1]}')
+
+copy2('./pack.mcmeta',f'./MCRandPack{dt}/') # Copies .mcmeta file to new directory
