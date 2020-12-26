@@ -40,5 +40,9 @@ from pathlib import Path
 # print(re.findall(r'\/.*$',addr)[-1])
 
 
-img = i.open(imagepath)
+img = i.open('./allium (2).png')
 pixels = img.load()
+
+for x in range(img.size[0]):
+	for y in range(img.size[1]):
+		print(pixels[x,y])
