@@ -1,4 +1,6 @@
 from PIL import Image as i
+import os, re
+from pathlib import Path
 
 # f = 'hello.png'
 # print(f[-4:])
@@ -28,5 +30,15 @@ from PIL import Image as i
 # print(img.getpixel((1,1)))
 
 
-a = [1,2,3,4]
-print(tuple(lambda a: a.append(5)))
+# a = [1,2,3,4]
+# print(tuple(lambda a: a.append(5)))
+
+# Path('./my/directory').mkdir(parents=True, exist_ok=True)
+
+# addr = 'H:/Python/MC RandPack/1.16.4.png'
+
+# print(re.findall(r'\/.*$',addr)[-1])
+
+
+img = i.open(imagepath)
+pixels = img.load()
