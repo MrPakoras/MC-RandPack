@@ -75,14 +75,14 @@ def rgbswap(imagepath, filename): # Swaps RGB value with each other
 		pass
 
 
-
+## Creating subdirs for entity folder
 for dirName, subdirList, fileList in os.walk(f'{rootdir}entity/'):
 	for subdirname in subdirList:
 		texdirs.append(f'entity/{subdirname}/')
-		newdir = f'./MCRandPack{dt}/assets/minecraft/textures/entity/{subdirname}' 
-		Path(newdir).mkdir(parents=True, exist_ok=True) # Make new directory for edited textures
+		newentitydir = f'./MCRandPack{dt}/assets/minecraft/textures/entity/{subdirname}' 
+		Path(newentitydir).mkdir(parents=True, exist_ok=True) # Make new directory for edited textures
 
-
+## Iterating through dirs
 for folder in texdirs:
 	newdir = f'./MCRandPack{dt}/assets/minecraft/textures/{folder}' 
 	Path(newdir).mkdir(parents=True, exist_ok=True) # Make new directory for edited textures
@@ -90,7 +90,9 @@ for folder in texdirs:
 	for dirName, subdirList, fileList in os.walk(f'{rootdir}{folder}'):
 		for fname in enumerate(fileList, start=1):
 			filename = f'{rootdir}{folder}{fname[1]}'
-			if filename[-4:] == '.png':
+			fileext = os.path.splitext(filename)[1]
+
+			if fileext == '.png':
 				if fname[1] in exclfiles:
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.RED}{fname[1]}')
 				elif fname[1] in colfiles:
@@ -99,6 +101,12 @@ for folder in texdirs:
 				else:
 					rgbswap(filename, fname[1])
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.GREEN}{fname[1]}')
+
+			elif fileext == '.mcmeta':
+				try:
+					os.rename(filename,f'{newdir}{fname[1]}')
+				except FileNotFoundError:
+					os.rename(filename,f'{newentitydir}{fname[1]}')
 
 		
 		# for fname in enumerate(fileList, start=1):
