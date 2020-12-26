@@ -14,16 +14,16 @@ dt = time.strftime('-%d%m%y-%H%M%S')
 # Excluded files
 exclfiles = ['water_flow.png', 'water_overlay.png', 'water_still.png']
 # Coloursed files
-colfiles = ['lava_flow.png','lava_still.png','redstone_block.png','end_portal.png','bedrock.png','stone.png']
+colfiles = ['lava_flow.png','lava_still.png','redstone_block.png','end_portal.png','bedrock.png','stone.png','nether_portal.png','fire_0.png','fire_1.png','soul_fire_0.png','soul_fire_1.png']
 
 
 def cfg(imagepath, filename): # Colourise from greyscale 
 	try:
 		img = i.open(imagepath)
 
-		cb, cw = random.randint(0,125), random.randint(126,255)
+		cb, cw = tuple([random.randint(0,255) for loop in range(3)]), tuple([random.randint(0,255) for loop in range(3)])
 		img = img.convert('L') # Convert to greyscale
-		img = ImageOps.colorize(img, black=(cb,cb,cb), white=(cw,cw,cw)) # colour map
+		img = ImageOps.colorize(img, black=cb, white=cw) # colour map
 
 		img.save(f'{newdir}{filename}', format='PNG')
 
@@ -95,6 +95,7 @@ for folder in texdirs:
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.RED}{fname[1]}')
 				elif fname[1] in colfiles:
 					cfg(filename, fname[1])
+					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.YELLOW}{fname[1]}')
 				else:
 					rgbswap(filename, fname[1])
 					print(f'{Fore.CYAN}>> {fname[0]} - {Fore.GREEN}{fname[1]}')
