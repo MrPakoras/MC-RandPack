@@ -103,8 +103,20 @@ from pathlib import Path
 # print(random.sample(a[:3],3))
 
 
-rootdir = './1.16.4/assets/minecraft/textures/' 
+# rootdir = './1.16.4/assets/minecraft/textures/' 
 
-for dirname, subdirlist, filelist in os.walk(rootdir):
-	print(dirname.replace(rootdir,''))
-	# [print(x) for x in enumerate(subdirList)]
+# for dirname, subdirlist, filelist in os.walk(rootdir):
+# 	print(dirname.replace(rootdir,''))
+# 	# [print(x) for x in enumerate(subdirList)]
+
+
+a = ['one','two','three','four','five']
+
+# print(random.sample(a,len(a)))
+
+# [print(random.sample(a,1)[0]) for loop in range(5)]
+
+for loop in range(len(a)):
+	b = random.choice(a)
+	a.remove(b)
+	print(b)
